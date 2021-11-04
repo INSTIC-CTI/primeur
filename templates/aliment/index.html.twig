@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AlimentController!{% endblock %}
+
+{% block body %}
+
+<h1>Liste des aliments</h1>
+
+
+{# TODO: Need Add Image #}
+{% for aliment in aliments %}
+
+<div class="card" style="width: 18rem;">
+  <img src="{{asset('images/legumes/'~ aliment.nom ~ '.jpg')}}" class="card-img-top" alt="...">
+
+  <div class="card-body">
+    <h5 class="card-title"> {{ aliment.nom }}</h5>
+    <p class="card-subtile">{{aliment.lipide }}</p>
+    <p class="card-subtile">{{aliment.glucide }}</p>
+    <p class="card-subtile">{{aliment.proteine }}</p>
+    <p class="card-subtile">{{aliment.prix }}</p>
+    <p class="card-subtile">{{aliment.calorie }}</p>
+    
+  </div>
+</div>
+
+    
+{% endfor %}
+    
+{% endblock %}
