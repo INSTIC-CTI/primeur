@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<a href="" class="btn btn-success">Ajouter</a>
+<table class="table">
+
+<tr class="table-primary">
+  <td>Image</td>
+  <td>Aliment</td>
+  <td>Prix</td>
+  <td>Calories</td>
+  <td>Protéines</td>
+  <td>Glucides</td>
+  <td>Lipides</td>
+  <td>Actions</td>
+</tr>
+{% for aliment in aliments %}
+  <tr>
+    <td style="width:10%">
+      <img src="{{ asset('images/legumes/'~ aliment.nom) }}" alt="">
+    </td>
+    <td><strong>{{aliment.nom}}</strong></td>
+    <td>{{ aliment.prix}}</td>
+    <td>{{ aliment.calorie}}</td>
+    <td>{{ aliment.proteine}}</td>
+    <td>{{ aliment.glucide}}</td>
+    <td>{{ aliment.lipide}}</td>
+    <td>
+      <a href="" class="btn btn-secondary">Modifier</a>
+      <a href="" class="btn btn-danger">Supprimer</a>
+    </td>
+  </tr>
+{% endfor %}
+</table>
+
+{% endblock %}
