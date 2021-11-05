@@ -3,7 +3,7 @@
 {% block title %}Administration{% endblock %}
 
 {% block body %}
-<a href="" class="btn btn-success">Ajouter</a>
+<a href="{{ path('admin_aliments_create')}}" class="btn btn-success">Ajouter</a>
 <table class="table">
 
 <tr class="table-primary">
@@ -28,8 +28,13 @@
     <td>{{ aliment.glucide}}</td>
     <td>{{ aliment.lipide}}</td>
     <td>
-      <a href="" class="btn btn-secondary">Modifier</a>
-      <a href="" class="btn btn-danger">Supprimer</a>
+      <a href="{{ path('admin_aliments_edit' ,{'id': aliment.id} )}}" class="btn btn-secondary">Modifier</a>
+      <form style="display:inline-block;" action="{{ path('admin_aliments_suppression', {'id': aliment.id })}}" method="POST">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="_token" value="{{csrf_token('SUP'~ aliment.id)}}">
+                        <input type="submit" class="btn btn-danger" value="Supprimer" onsubmit="return confirm(confirmez la suppression ?)">
+                    </form>
+
     </td>
   </tr>
 {% endfor %}
