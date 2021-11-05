@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id
@@ -56,15 +57,31 @@ class Utilisateur
 
         return $this;
     }
-    public function getPasswordConfirmation(): ?string
+    public function getConfirmationPassword(): ?string
     {
-        return $this->password;
+        return $this->password_confirmation;
     }
 
-    public function setPasswordConfirmation(string $passwordConfirmation): self
+    public function setConfirmationPassword(string $password_confirmation): self
     {
         $this->passwordConfirmation = $passwordConfirmation;
 
         return $this;
     }
+    public function eraseCredentials() 
+    {
+
+    }
+    public function getSalt() 
+    {
+
+    }
+    public function getUserIdentifier() {
+      
+    }
+    public function getRoles()
+    {
+      return ['ROLE_USER'];
+    }
+
 }

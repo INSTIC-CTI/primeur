@@ -9,17 +9,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AdminSecuController extends AbstractController
 {
     #[Route('/inscription', name: 'inscription')]
-    public function index(Request $request, EntityManagerInterface $manager): Response
+    public function index(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $encoder): Response
     {
       $utilisateur = new Utilisateur();
       $form = $this->createForm(InscriptionType::class, $utilisateur);
 
     $form->handleRequest($request);
     if($form->isSubmitted() && $form->isValid()) {
+      $passwordCrypte = $encoder->hashPassword($utilisateur, $utilisateur->getPassword());
+      $utilisateur->setPassword($passwordCrypte);
       $manager->persist($utilisateur);
       $manager->flush();
     }
