@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AdminSecuController extends AbstractController
@@ -29,5 +30,20 @@ class AdminSecuController extends AbstractController
         return $this->render('admin_secu/inscription.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/login', name: 'connexion')]
+    public function login(AuthenticationUtils $authUtil)
+    {
+      return $this->render('admin_secu/login.html.twig', [
+        'lastUserName' => $authUtil->getLastUsername(),
+        'error' => $authUtil->getLastAuthenticationError(),
+      ]);
+    }
+
+    #[Route('/logout', name: 'logout')]
+    public function logout()
+    {
+
     }
 }

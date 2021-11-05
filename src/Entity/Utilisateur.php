@@ -76,9 +76,7 @@ class Utilisateur implements UserInterface
     {
 
     }
-    public function getUserIdentifier() {
-      
-    }
+   
     public function getRoles()
     {
       return ['ROLE_USER'];
