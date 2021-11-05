@@ -23,7 +23,7 @@ class AdminAlimentController extends AbstractController
         ]);
     }
     #[Route('/admin/aliments/create', name:'admin_aliments_create')]
-    #[Route('/admin/aliments/{id}', name:"admin_aliments_edit", methods:['GET'|'POST'])]
+    #[Route('/admin/aliments/{id}', name:"admin_aliments_edit", methods:['GET','POST'])]
       public function createAndEditAction(Aliment $aliment = null, Request $request, EntityManagerInterface $manager) 
       {
         if(!$aliment){
@@ -32,8 +32,11 @@ class AdminAlimentController extends AbstractController
         $form = $this->createForm(AlimentType::class, $aliment);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+          $modif = $aliment->getId()!== null;
           $manager->persist($aliment);
+          $this->addFlash("success", ($modif) ? "La modification a été effectuée" : "L'ajout a été effectuée");
           $manager->flush();
+
           return $this->redirectToRoute('admin_aliments');
         }
 
@@ -48,6 +51,8 @@ class AdminAlimentController extends AbstractController
           if($this->isCsrfTokenValid('SUP' . $aliment->getId(), $request->get('_token'))) {
               $manager->remove($aliment);
               $manager->flush();
+              $this->addFlash("success", "La suppression a été effectuée");
+
               return $this->redirectToRoute('admin_aliments');
           }
       }

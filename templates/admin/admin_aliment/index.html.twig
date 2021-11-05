@@ -3,6 +3,14 @@
 {% block title %}Administration{% endblock %}
 
 {% block body %}
+
+{% for message in app.flashes("success") %}
+
+  <div class="alert alert-success">
+    {{message}}
+  </div>
+  
+{% endfor %}
 <a href="{{ path('admin_aliments_create')}}" class="btn btn-success">Ajouter</a>
 <table class="table">
 
